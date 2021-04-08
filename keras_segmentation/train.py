@@ -14,7 +14,7 @@ import numpy as np
 EPS = 1e-12
 
 def tf_iou(y_true, y_pred):
-    iou = tf.py_func(get_iou, [y_true, y_pred], tf.float32)
+    iou = tf.py_function(get_iou, [y_true, y_pred], tf.float32)
     return iou
 
 def get_iou(y_true, y_pred):
