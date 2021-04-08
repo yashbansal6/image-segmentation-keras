@@ -13,7 +13,13 @@ import numpy as np
 
 EPS = 1e-12
 
+def tf_iou(y_true, y_pred):
+    iou = tf.py_func(get_iou, [y_true, y_pred], tf.float32)
+    return iou
+
 def get_iou(y_true, y_pred):
+    y_true = y_true.astype(np.float32)
+    y_pred = y_pred.astype(np.float32)
     n_classes = 3
     class_wise = np.zeros(n_classes)
     for cl in range(n_classes):
@@ -22,6 +28,7 @@ def get_iou(y_true, y_pred):
         iou = float(intersection)/(union + EPS)
         class_wise[cl] = iou
     m = np.mean(class_wise)
+    # iou = iou.astype(np.float32)
     return m
 
 def find_latest_checkpoint(checkpoints_path, fail_safe=True):
@@ -132,7 +139,7 @@ def train(model,
 
         model.compile(loss=loss_k,
                       optimizer=optimizer_name,
-                      metrics=[get_iou])
+                      metrics=[tf_iou])
 
     if checkpoints_path is not None:
         config_file = checkpoints_path + "_config.json"
