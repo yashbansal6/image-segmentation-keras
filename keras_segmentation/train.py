@@ -9,6 +9,19 @@ from tensorflow.keras.callbacks import ModelCheckpoint
 import tensorflow as tf
 import glob
 import sys
+import numpy as np
+
+EPS = 1e-12
+
+def get_iou(y_true, y_true, n_classes):
+    class_wise = np.zeros(n_classes)
+    for cl in range(n_classes):
+        intersection = np.sum((y_true == cl)*(y_true == cl))
+        union = np.sum(np.maximum((y_true == cl), (y_true == cl)))
+        iou = float(intersection)/(union + EPS)
+        class_wise[cl] = iou
+        m = np.mean(class_wise)
+    return m
 
 def find_latest_checkpoint(checkpoints_path, fail_safe=True):
 
@@ -118,7 +131,7 @@ def train(model,
 
         model.compile(loss=loss_k,
                       optimizer=optimizer_name,
-                      metrics=['accuracy'])
+                      metrics=[get_iou(y_true, y_pred, 3)]
 
     if checkpoints_path is not None:
         config_file = checkpoints_path + "_config.json"
