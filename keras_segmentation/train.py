@@ -131,7 +131,7 @@ def train(model,
 
         model.compile(loss=loss_k,
                       optimizer=optimizer_name,
-                      metrics=[get_iou(y_true, y_pred, 3)]
+                      metrics=[get_iou(y_true, y_pred, 3)])
 
     if checkpoints_path is not None:
         config_file = checkpoints_path + "_config.json"
