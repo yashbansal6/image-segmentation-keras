@@ -17,11 +17,11 @@ def get_iou(y_true, y_pred):
     n_classes = 3
     class_wise = np.zeros(n_classes)
     for cl in range(n_classes):
-        intersection = np.sum((y_true == cl)*(y_pred == cl))
+        intersection = np.sum(np.multiply((y_true == cl), (y_pred == cl)))
         union = np.sum(np.maximum((y_true == cl), (y_pred == cl)))
         iou = float(intersection)/(union + EPS)
         class_wise[cl] = iou
-        m = np.mean(class_wise)
+    m = np.mean(class_wise)
     return m
 
 def find_latest_checkpoint(checkpoints_path, fail_safe=True):
