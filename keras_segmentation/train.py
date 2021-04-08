@@ -13,6 +13,9 @@ import numpy as np
 
 EPS = 1e-12
 
+def tf_iou_loss(y_true, y_pred):
+    return -tf_iou(y_true, y_pred)
+
 def tf_iou(y_true, y_pred):
     iou = tf.py_function(get_iou, [y_true, y_pred], tf.float32)
     return iou
@@ -137,7 +140,7 @@ def train(model,
         else:
             loss_k = 'categorical_crossentropy'
 
-        model.compile(loss=[-tf_iou],
+        model.compile(loss=[tf_iou_loss],
                       optimizer=optimizer_name,
                       metrics=[tf_iou])
 
