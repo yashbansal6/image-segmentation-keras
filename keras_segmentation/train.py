@@ -18,8 +18,8 @@ def tf_iou(y_true, y_pred):
     return iou
 
 def get_iou(y_true, y_pred):
-    y_true = y_true.astype(np.float32)
-    y_pred = y_pred.astype(np.float32)
+#     y_true = y_true.astype(np.float32)
+#     y_pred = y_pred.astype(np.float32)
     n_classes = 3
     class_wise = np.zeros(n_classes)
     for cl in range(n_classes):
