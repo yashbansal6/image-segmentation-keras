@@ -17,8 +17,8 @@ def get_iou(y_true, y_pred):
     n_classes = 3
     class_wise = np.zeros(n_classes)
     for cl in range(n_classes):
-        intersection = np.sum((1*(y_true == cl))*(1*(y_pred == cl)))
-        union = np.sum(np.maximum((1*(y_true == cl)), (1*(y_pred == cl))))
+        intersection = np.sum((y_true == cl)*(y_pred == cl))
+        union = np.sum(np.maximum((y_true == cl), (y_pred == cl)))
         iou = float(intersection)/(union + EPS)
         class_wise[cl] = iou
         m = np.mean(class_wise)
