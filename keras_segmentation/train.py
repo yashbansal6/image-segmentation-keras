@@ -14,7 +14,7 @@ import numpy as np
 EPS = 1e-12
 
 def tf_iou_loss(y_true, y_pred):
-    return -tf_iou(y_true, y_pred)
+    return tf.math.negative(tf_iou(y_true, y_pred))
 
 def tf_iou(y_true, y_pred):
     iou = tf.py_function(get_iou, [y_true, y_pred], tf.float32)
