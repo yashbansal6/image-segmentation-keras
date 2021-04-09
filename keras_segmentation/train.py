@@ -25,6 +25,7 @@ def get_iou(y_true, y_pred):
 #     y_pred = y_pred.astype(np.float32)
     n_classes = 3
     class_wise = np.zeros(n_classes)
+    y_pred = np.rint(y_pred)
     for cl in range(n_classes):
         intersection = np.sum(np.multiply((y_true == cl), (y_pred == cl)))
         union = np.sum(np.maximum((y_true == cl), (y_pred == cl)))
@@ -140,7 +141,7 @@ def train(model,
         else:
             loss_k = 'categorical_crossentropy'
 
-        model.compile(loss=[tf_iou_loss],
+        model.compile(loss='mse',
                       optimizer=optimizer_name,
                       metrics=[tf_iou])
 
