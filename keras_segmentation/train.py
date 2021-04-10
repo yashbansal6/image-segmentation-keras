@@ -141,7 +141,7 @@ def train(model,
         else:
             loss_k = 'categorical_crossentropy'
 
-        model.compile(loss=[tf_iou_loss],
+        model.compile(loss='mse',
                       optimizer=optimizer_name,
                       metrics=[tf_iou])
 
